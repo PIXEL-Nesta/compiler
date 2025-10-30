@@ -4,75 +4,272 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Online HTML • CSS • JS Compiler</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <meta name="description" content="Free online HTML, CSS and JavaScript compiler and live editor. Write, run, preview and save snippets in real‑time — no account needed.">
+<meta name="keywords" content="online compiler, html editor, css editor, javascript editor, live preview, coding playground, web sandbox, front end editor, code runner">
+<link rel="canonical" href="https://your-domain.com/online-html-css-js-compiler">
+<meta property="og:title" content="Online HTML/CSS/JS Compiler — Live Code Editor">
+<meta property="og:description" content="Instant HTML, CSS & JS code runner with live preview. Save snippets, auto‑preview, export HTML and more.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+  <style>
+    :root{
+      --bg:#0f1724; --panel:#0b1220; --muted:#9aa4b2; --accent:#6ee7b7;
+      --editor-bg:#071024; --editor-color:#dbe7ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,-apple-system; background:var(--bg); color:var(--editor-color)}
+    .app{display:flex;flex-direction:column;height:100vh}
+    header{display:flex;align-items:center;gap:12px;padding:10px 14px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);border-bottom:1px solid rgba(255,255,255,0.03)}
+    header h1{font-size:16px;margin:0;font-weight:600}
+    .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;color:var(--editor-color);cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+    main{display:flex;flex:1;gap:8px;padding:10px}
+    .left{width:48%;display:flex;flex-direction:column;gap:8px}
+    .editors{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:10px;padding:8px;display:flex;flex-direction:column;min-height:120px}
+    .panel .title{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:6px}
+    textarea{flex:1;background:var(--editor-bg);color:var(--editor-color);border:0;padding:10px;border-radius:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;resize:none;min-height:120px}
+    .bottom-tools{display:flex;gap:8px;align-items:center}
+    .preview{flex:1;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
+    iframe{width:100%;height:100%;border:0;background:#fff}
+    .sidebar{width:300px;display:flex;flex-direction:column;gap:8px}
+    .list{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:8px;border-radius:8px;overflow:auto;max-height:400px}
+    .snip{padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .muted{color:var(--muted);font-size:13px}
+    .small{font-size:12px}
+    input[type=text]{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--editor-color)}
+    label.switch{display:inline-flex;align-items:center;gap:6px}
+    .hint{font-size:12px;color:var(--muted)}
+    /* light theme */
+    .light{--bg:#f6f8fb;--panel:#ffffff;--muted:#4b5563;--accent:#0ea5a4;--editor-bg:#fbfdff;--editor-color:#0b1220}
+    @media(max-width:980px){main{flex-direction:column} .left{width:100%} .sidebar{width:100%} .editors{grid-template-columns:1fr}}
+  </style>
 </head>
-<label class="switch hint">
-<input type="checkbox" id="autoToggle"><span class="small">Auto-preview</span>
-</label>
-<button class="btn" id="downloadBtn">Export .html</button>
-<button class="btn" id="openNewBtn">Open Preview</button>
-<button class="btn" id="themeBtn">Toggle Light</button>
-</div>
-</header>
+<body>
+  <div class="app" id="app">
+    <header>
+      <h1>Online HTML • CSS • JS Compiler</h1>
+      <div class="controls">
+        <button class="btn" id="runBtn">Run (Ctrl+Enter)</button>
+        <label class="switch hint">
+          <input type="checkbox" id="autoToggle"><span class="small">Auto-preview</span>
+        </label>
+        <button class="btn" id="downloadBtn">Export .html</button>
+        <button class="btn" id="openNewBtn">Open Preview</button>
+        <button class="btn" id="themeBtn">Toggle Light</button>
+      </div>
+    </header>
 
-
-<main>
-<div class="left">
-<div class="editors">
-<div class="panel">
-<div class="title">HTML</div>
-<textarea id="html" placeholder="Write HTML here &lt;!-- body/html --&gt;"><!-- Example: -->
+    <main>
+      <div class="left">
+        <div class="editors">
+          <div class="panel">
+            <div class="title">HTML</div>
+            <textarea id="html" placeholder="Write HTML here &lt;!-- body/html --&gt;"><!-- Example: -->
 <div class="hello">Hello from your live preview!</div>
 </textarea>
-</div>
+          </div>
 
-
-<div class="panel">
-<div class="title">CSS</div>
-<textarea id="css" placeholder="Write CSS here">body{font-family:system-ui,Segoe UI,Roboto;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:linear-gradient(135deg,#0ea5a4,#7c3aed);color:white}
+          <div class="panel">
+            <div class="title">CSS</div>
+            <textarea id="css" placeholder="Write CSS here">body{font-family:system-ui,Segoe UI,Roboto;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:linear-gradient(135deg,#0ea5a4,#7c3aed);color:white}
 .hello{font-size:28px;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.08)}</textarea>
-</div>
+          </div>
 
-
-<div class="panel" style="grid-column:1/-1">
-<div class="title">JavaScript</div>
-<textarea id="js" placeholder="Write JS here">console.log('Welcome!');
+          <div class="panel" style="grid-column:1/-1">
+            <div class="title">JavaScript</div>
+            <textarea id="js" placeholder="Write JS here">console.log('Welcome!');
 document.addEventListener('click', ()=> console.log('preview clicked'));</textarea>
-</div>
-</div>
+          </div>
+        </div>
 
+        <div class="bottom-tools">
+          <input type="text" id="saveName" placeholder="Snippet name (for local save)" />
+          <button class="btn" id="saveBtn">Save</button>
+          <button class="btn" id="loadBtn">Load Selected</button>
+          <button class="btn" id="clearBtn">Clear</button>
+          <div class="hint" style="margin-left:auto">Saved in browser (localStorage)</div>
+        </div>
+      </div>
 
-<div class="bottom-tools">
-<input type="text" id="saveName" placeholder="Snippet name (for local save)" />
-<button class="btn" id="saveBtn">Save</button>
-<button class="btn" id="loadBtn">Load Selected</button>
-<button class="btn" id="clearBtn">Clear</button>
-<div class="hint" style="margin-left:auto">Saved in browser (localStorage)</div>
-</div>
-</div>
+      <aside class="sidebar">
+        <div class="panel">
+          <div class="title">Preview</div>
+          <div class="preview" style="height:320px"><iframe id="preview" sandbox="allow-scripts allow-forms"></iframe></div>
+        </div>
 
+        <div class="panel">
+          <div class="title">Saved Snippets</div>
+          <div class="list" id="snippetList"></div>
+        </div>
+      </aside>
+    </main>
 
-<aside class="sidebar">
-<div class="panel">
-<div class="title">Preview</div>
-<div class="preview" style="height:320px"><iframe id="preview" sandbox="allow-scripts allow-forms"></iframe></div>
-</div>
+    <footer style="padding:10px 14px;border-top:1px solid rgba(255,255,255,0.02);display:flex;gap:10px;align-items:center">
+      <div class="muted">Tips: Use <strong>Ctrl+Enter</strong> to run. Auto-preview will update preview while typing.</div>
+      <div style="margin-left:auto" class="muted">Built with ❤️ — Offline single-file editor</div>
+    </footer>
+  </div>
 
+  <script>
+    // Elements
+    const htmlEl = document.getElementById('html');
+    const cssEl = document.getElementById('css');
+    const jsEl = document.getElementById('js');
+    const preview = document.getElementById('preview');
+    const runBtn = document.getElementById('runBtn');
+    const autoToggle = document.getElementById('autoToggle');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const openNewBtn = document.getElementById('openNewBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const loadBtn = document.getElementById('loadBtn');
+    const snippetList = document.getElementById('snippetList');
+    const saveName = document.getElementById('saveName');
+    const clearBtn = document.getElementById('clearBtn');
+    const themeBtn = document.getElementById('themeBtn');
 
-<div class="panel">
-<div class="title">Saved Snippets</div>
-<div class="list" id="snippetList"></div>
-</div>
-</aside>
-</main>
+    // Helpers
+    function buildSrcDoc(){
+      const html = htmlEl.value;
+      const css = '<style>'+cssEl.value+'</style>';
+      const js = '<script>'+jsEl.value+'<\/script>';
+      return `<!doctype html><html><head><meta charset="utf-8">${css}</head><body>${html}${js}</body></html>`;
+    }
 
+    function updatePreview(){
+      preview.srcdoc = buildSrcDoc();
+    }
 
-<footer style="padding:10px 14px;border-top:1px solid rgba(255,255,255,0.02);display:flex;gap:10px;align-items:center">
-<div class="muted">Tips: Use <strong>Ctrl+Enter</strong> to run. Auto-preview will update preview while typing.</div>
-<div style="margin-left:auto" class="muted">Built with ❤️ — Offline single-file editor</div>
-</footer>
-</div>
+    // Run button
+    runBtn.addEventListener('click', updatePreview);
+
+    // Auto-preview
+    let auto = JSON.parse(localStorage.getItem('ohcj_auto')||'false');
+    autoToggle.checked = auto;
+    function setAuto(v){ auto = v; localStorage.setItem('ohcj_auto', JSON.stringify(!!v)); }
+    autoToggle.addEventListener('change', (e)=>{ setAuto(e.target.checked); });
+
+    // Keyboard shortcut Ctrl+Enter
+    document.addEventListener('keydown', (e)=>{
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+        e.preventDefault(); updatePreview();
+      }
+    });
+
+    // Auto update while typing
+    [htmlEl, cssEl, jsEl].forEach(el=>{
+      el.addEventListener('input', ()=>{ if (auto) updatePreview(); });
+    });
+
+    // Download exported HTML file
+    downloadBtn.addEventListener('click', ()=>{
+      const blob = new Blob([buildSrcDoc()], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = (saveName.value || 'snippet') + '.html'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Open preview in new tab --- fixed to handle blocked popups
+    openNewBtn.addEventListener('click', ()=>{
+      try{
+        const w = window.open();
+        if (w && w.document){
+          // Normal case: new window opened, write preview
+          w.document.open();
+          w.document.write(buildSrcDoc());
+          w.document.close();
+        } else {
+          // Popup blocked or window.open returned null
+          const userChoice = confirm('Popup was blocked or failed to open a new window.\n\nDo you want to open the preview in the current tab (this will replace the editor)? Click Cancel to instead export the HTML file.');
+          if (userChoice){
+            // Create a blob URL and navigate current tab to it (user agreed)
+            const blob = new Blob([buildSrcDoc()], {type:'text/html'});
+            const url = URL.createObjectURL(blob);
+            // navigate current tab — user consented
+            window.location.href = url;
+          } else {
+            // Offer to download instead
+            const doDownload = confirm('Would you like to download the HTML file so you can open it manually?');
+            if (doDownload){
+              const blob = new Blob([buildSrcDoc()], {type:'text/html'});
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a'); a.href = url; a.download = (saveName.value || 'snippet') + '.html'; a.click();
+              URL.revokeObjectURL(url);
+            } else {
+              alert('Preview not opened. To enable one-click preview, allow popups for this page or use Export .html.');
+            }
+          }
+        }
+      }catch(err){
+        console.error('Error opening preview:', err);
+        alert('An error occurred while trying to open the preview. Check console for details.');
+      }
+    });
+
+    // Save / Load snippets in localStorage
+    function getSnips(){
+      try{ return JSON.parse(localStorage.getItem('ohcj_snips')||'[]'); }catch(e){return []}
+    }
+    function saveSnips(arr){ localStorage.setItem('ohcj_snips', JSON.stringify(arr)); }
+
+    function renderList(){
+      const arr = getSnips();
+      snippetList.innerHTML = '';
+      if(!arr.length){ snippetList.innerHTML = '<div class="muted">No saved snippets yet.</div>'; return }
+      arr.slice().reverse().forEach((s,i)=>{
+        const el = document.createElement('div'); el.className='snip';
+        el.innerHTML = `<div style="flex:1"><strong class="small">${s.name}</strong><div class="muted small">${new Date(s.ts).toLocaleString()}</div></div>`;
+        const controls = document.createElement('div');
+        const load = document.createElement('button'); load.className='btn small'; load.textContent='Load';
+        const del = document.createElement('button'); del.className='btn small'; del.textContent='Delete';
+        controls.appendChild(load); controls.appendChild(del);
+        el.appendChild(controls);
+        load.addEventListener('click', ()=>{
+          htmlEl.value = s.html; cssEl.value = s.css; jsEl.value = s.js; if(auto) updatePreview(); else preview.srcdoc = buildSrcDoc();
+        });
+        del.addEventListener('click', ()=>{
+          const all = getSnips(); const idx = all.findIndex(x=>x.ts===s.ts);
+          if(idx>-1){ all.splice(idx,1); saveSnips(all); renderList(); }
+        });
+        snippetList.appendChild(el);
+      });
+    }
+
+    saveBtn.addEventListener('click', ()=>{
+      const name = (saveName.value||'untitled').slice(0,80);
+      const arr = getSnips();
+      arr.push({name,html:htmlEl.value,css:cssEl.value,js:jsEl.value,ts:Date.now()});
+      saveSnips(arr); renderList(); saveName.value='';
+    });
+
+    loadBtn.addEventListener('click', ()=>{
+      const arr = getSnips(); if(!arr.length) return alert('No saved snippets');
+      const s = arr[arr.length-1]; htmlEl.value=s.html; cssEl.value=s.css; jsEl.value=s.js; if(auto) updatePreview(); else preview.srcdoc = buildSrcDoc();
+    });
+
+    clearBtn.addEventListener('click', ()=>{
+      if(!confirm('Clear all editor contents?')) return; htmlEl.value=''; cssEl.value=''; jsEl.value=''; if(auto) updatePreview(); else preview.srcdoc = buildSrcDoc();
+    });
+
+    // Theme toggle
+    function setTheme(light){ document.documentElement.classList.toggle('light', !!light); themeBtn.textContent = light? 'Toggle Dark':'Toggle Light'; localStorage.setItem('ohcj_theme', JSON.stringify(!!light)); }
+    themeBtn.addEventListener('click', ()=>{ setTheme(!document.documentElement.classList.contains('light')); });
+    setTheme(JSON.parse(localStorage.getItem('ohcj_theme')||'false'));
+
+    // Init
+    renderList(); if(auto) updatePreview(); else preview.srcdoc = buildSrcDoc();
+
+    // Save workspace automatically on unload
+    window.addEventListener('beforeunload', ()=>{
+      localStorage.setItem('ohcj_workspace', JSON.stringify({html:htmlEl.value,css:cssEl.value,js:jsEl.value}));
+    });
+    // Restore workspace
+    (function(){
+      const w = JSON.parse(localStorage.getItem('ohcj_workspace')||'null');
+      if(w){ htmlEl.value = w.html||htmlEl.value; cssEl.value = w.css||cssEl.value; jsEl.value = w.js||jsEl.value; }
+    })();
+
+  </script>
 </body>
 </html>
-
