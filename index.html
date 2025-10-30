@@ -3,74 +3,76 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Online HTML/CSS/JS Compiler</title>
+  <title>Online HTML • CSS • JS Compiler</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
 </head>
-<body>
-  <div class="app" id="app">
-    <header>
-      <h1>Online HTML • CSS • JS Compiler</h1>
-      <div class="controls">
-        <button class="btn" id="runBtn">Run (Ctrl+Enter)</button>
-        <label class="switch hint">
-          <input type="checkbox" id="autoToggle"><span class="small">Auto-preview</span>
-        </label>
-        <button class="btn" id="downloadBtn">Export .html</button>
-        <button class="btn" id="openNewBtn">Open Preview</button>
-        <button class="btn" id="themeBtn">Toggle Light</button>
-      </div>
-    </header>
+<label class="switch hint">
+<input type="checkbox" id="autoToggle"><span class="small">Auto-preview</span>
+</label>
+<button class="btn" id="downloadBtn">Export .html</button>
+<button class="btn" id="openNewBtn">Open Preview</button>
+<button class="btn" id="themeBtn">Toggle Light</button>
+</div>
+</header>
 
-    <main>
-      <div class="left">
-        <div class="editors">
-          <div class="panel">
-            <div class="title">HTML</div>
-            <textarea id="html" placeholder="Write HTML here &lt;!-- body/html --&gt;"><!-- Example: -->
+
+<main>
+<div class="left">
+<div class="editors">
+<div class="panel">
+<div class="title">HTML</div>
+<textarea id="html" placeholder="Write HTML here &lt;!-- body/html --&gt;"><!-- Example: -->
 <div class="hello">Hello from your live preview!</div>
 </textarea>
-          </div>
+</div>
 
-          <div class="panel">
-            <div class="title">CSS</div>
-            <textarea id="css" placeholder="Write CSS here">body{font-family:system-ui,Segoe UI,Roboto;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:linear-gradient(135deg,#0ea5a4,#7c3aed);color:white}
+
+<div class="panel">
+<div class="title">CSS</div>
+<textarea id="css" placeholder="Write CSS here">body{font-family:system-ui,Segoe UI,Roboto;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:linear-gradient(135deg,#0ea5a4,#7c3aed);color:white}
 .hello{font-size:28px;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.08)}</textarea>
-          </div>
+</div>
 
-          <div class="panel" style="grid-column:1/-1">
-            <div class="title">JavaScript</div>
-            <textarea id="js" placeholder="Write JS here">console.log('Welcome!');
+
+<div class="panel" style="grid-column:1/-1">
+<div class="title">JavaScript</div>
+<textarea id="js" placeholder="Write JS here">console.log('Welcome!');
 document.addEventListener('click', ()=> console.log('preview clicked'));</textarea>
-          </div>
-        </div>
+</div>
+</div>
 
-        <div class="bottom-tools">
-          <input type="text" id="saveName" placeholder="Snippet name (for local save)" />
-          <button class="btn" id="saveBtn">Save</button>
-          <button class="btn" id="loadBtn">Load Selected</button>
-          <button class="btn" id="clearBtn">Clear</button>
-          <div class="hint" style="margin-left:auto">Saved in browser (localStorage)</div>
-        </div>
-      </div>
 
-      <aside class="sidebar">
-        <div class="panel">
-          <div class="title">Preview</div>
-          <div class="preview" style="height:320px"><iframe id="preview" sandbox="allow-scripts allow-forms"></iframe></div>
-        </div>
+<div class="bottom-tools">
+<input type="text" id="saveName" placeholder="Snippet name (for local save)" />
+<button class="btn" id="saveBtn">Save</button>
+<button class="btn" id="loadBtn">Load Selected</button>
+<button class="btn" id="clearBtn">Clear</button>
+<div class="hint" style="margin-left:auto">Saved in browser (localStorage)</div>
+</div>
+</div>
 
-        <div class="panel">
-          <div class="title">Saved Snippets</div>
-          <div class="list" id="snippetList"></div>
-        </div>
-      </aside>
-    </main>
 
-    <footer style="padding:10px 14px;border-top:1px solid rgba(255,255,255,0.02);display:flex;gap:10px;align-items:center">
-      <div class="muted">Tips: Use <strong>Ctrl+Enter</strong> to run. Auto-preview will update preview while typing.</div>
-      <div style="margin-left:auto" class="muted">Built with ❤️ by  — Offline single-file editor</div>
-    </footer>
-  </div>
+<aside class="sidebar">
+<div class="panel">
+<div class="title">Preview</div>
+<div class="preview" style="height:320px"><iframe id="preview" sandbox="allow-scripts allow-forms"></iframe></div>
+</div>
+
+
+<div class="panel">
+<div class="title">Saved Snippets</div>
+<div class="list" id="snippetList"></div>
+</div>
+</aside>
+</main>
+
+
+<footer style="padding:10px 14px;border-top:1px solid rgba(255,255,255,0.02);display:flex;gap:10px;align-items:center">
+<div class="muted">Tips: Use <strong>Ctrl+Enter</strong> to run. Auto-preview will update preview while typing.</div>
+<div style="margin-left:auto" class="muted">Built with ❤️ — Offline single-file editor</div>
+</footer>
+</div>
 </body>
 </html>
+
